@@ -2,57 +2,60 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerTeleport : MonoBehaviour
+namespace PlayerSpace
 {
-    private bool _isTeleportation;
-    private PlayerMover _playerMover;
-
-    public event UnityAction Teleported;
-
-    private void Awake()
+    public class PlayerTeleport : MonoBehaviour
     {
-        _playerMover = GetComponent<PlayerMover>();
-        _isTeleportation = true;
-    }
+        private bool _isTeleportation;
+        private PlayerMover _playerMover;
 
-    public void Teleportation(Vector3 targetPosition)
-    {
-        float duration = 0.5f;
-        float needPossitionY = 0.30f;
-        targetPosition.y = -1.2f;
+        public event UnityAction Teleported;
 
-        if (!_isTeleportation)
+        private void Awake()
         {
-            transform.DOMoveY(targetPosition.y, duration).OnComplete(() =>
-{
-    transform.DOMove(targetPosition, 0f).OnComplete(() =>
-    {
-        transform.DOMoveY(needPossitionY, duration);
-        Teleported?.Invoke();
-    });
-});
+            _playerMover = GetComponent<PlayerMover>();
+            _isTeleportation = true;
         }
-    }
 
-    private void OnEnable()
-    {
-        _playerMover.Moved += OnPlayerTeleported;
-        _playerMover.Stoped += OnPlayerStoped;
-    }
+        public void Teleportation(Vector3 targetPosition)
+        {
+            float duration = 0.5f;
+            float needPossitionY = 0.30f;
+            targetPosition.y = -1.2f;
 
-    private void OnDisable()
+            if (!_isTeleportation)
+            {
+                transform.DOMoveY(targetPosition.y, duration).OnComplete(() =>
     {
-        _playerMover.Moved -= OnPlayerTeleported;
-        _playerMover.Stoped -= OnPlayerStoped;
-    }
+        transform.DOMove(targetPosition, 0f).OnComplete(() =>
+        {
+            transform.DOMoveY(needPossitionY, duration);
+            Teleported?.Invoke();
+        });
+    });
+            }
+        }
 
-    private void OnPlayerTeleported()
-    {
-        _isTeleportation = false;
-    }
+        private void OnEnable()
+        {
+            _playerMover.Moved += OnPlayerTeleported;
+            _playerMover.Stoped += OnPlayerStoped;
+        }
 
-    private void OnPlayerStoped()
-    {
-        _isTeleportation = true;
+        private void OnDisable()
+        {
+            _playerMover.Moved -= OnPlayerTeleported;
+            _playerMover.Stoped -= OnPlayerStoped;
+        }
+
+        private void OnPlayerTeleported()
+        {
+            _isTeleportation = false;
+        }
+
+        private void OnPlayerStoped()
+        {
+            _isTeleportation = true;
+        }
     }
 }

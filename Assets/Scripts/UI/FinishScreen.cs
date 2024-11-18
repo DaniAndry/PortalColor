@@ -3,22 +3,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class FinishScreen : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private StepCounter _stepCounter;
-    [SerializeField] private TextMeshProUGUI _string;
-    [SerializeField] private Image[] _stars;
+    public class FinishScreen : MonoBehaviour
+    {
+        [SerializeField] private StepCounter _stepCounter;
+        [SerializeField] private TextMeshProUGUI _string;
+        [SerializeField] private Image[] _stars;
 
-    private int _currentPointsCount;
-    private int _maxPointsCount = 3;
-    private int _needStepCount = 8;
+        private int _currentPointsCount;
+        private int _maxPointsCount = 3;
+        private int _needStepCount = 8;
 
-    private string _pointsLevelName;
-    private string _currentLanguage;
+        private string _pointsLevelName;
+        private string _currentLanguage;
 
-    private string[] _currentWinStrigs;
-    private string[] _currentLoseStrigs;
-    private string[] _winStringsRussian = new string[] {
+        private string[] _currentWinStrigs;
+        private string[] _currentLoseStrigs;
+        private string[] _winStringsRussian = new string[]
+        {
         "Мега круто!",
         "Супер молодец!",
         "Великолепно!",
@@ -37,10 +40,11 @@ public class FinishScreen : MonoBehaviour
         "Грандиозный успех!",
         "Настоящий ас!",
         "Мастер своего дела!",
-        "Просто невероятно!"
-    };
+        "Просто невероятно!",
+        };
 
-    private string[] _loseStringsRussian = new string[] {
+        private string[] _loseStringsRussian = new string[]
+        {
         "Можно чуть получше!",
         "Ты можешь лучше!",
         "Неплохо, но можно лучше!",
@@ -48,9 +52,10 @@ public class FinishScreen : MonoBehaviour
         "Почти идеально",
         "Близко к совершенству!",
         "Ты на верном пути",
-    };
+        };
 
-    private string[] _winStringsEnglish = new string[] {
+        private string[] _winStringsEnglish = new string[]
+        {
         "Awesome!",
         "Well done!",
         "Great job!",
@@ -69,10 +74,11 @@ public class FinishScreen : MonoBehaviour
         "Spectacular success!",
         "A true ace!",
         "Master of your craft!",
-        "Simply incredible!"
-    };
+        "Simply incredible!",
+        };
 
-    private string[] _loseStringsEnglish = new string[] {
+        private string[] _loseStringsEnglish = new string[]
+        {
         "You can do better!",
         "You have the potential!",
         "Not bad, but you can improve!",
@@ -80,9 +86,10 @@ public class FinishScreen : MonoBehaviour
         "Almost perfect",
         "Close to perfection!",
         "You're on the right track",
-    };
+        };
 
-    private string[] _winStringsTurkish = new string[] {
+        private string[] _winStringsTurkish = new string[]
+        {
     "Harika bir iş!",
     "Bravo!",
     "Harika bir iş çıkardınız!",
@@ -101,10 +108,11 @@ public class FinishScreen : MonoBehaviour
     "Muhteşem bir başarı!",
     "Gerçek bir as!",
     "Ustalığınızla mükemmelsiniz!",
-    "Sadece inanılmaz!"
-};
+    "Sadece inanılmaz!",
+    };
 
-    private string[] _loseStringsTurkish = new string[] {
+        private string[] _loseStringsTurkish = new string[]
+        {
     "Daha iyi yapabilirsiniz!",
     "Potansiyeliniz var!",
     "Kötü değil, ama daha iyi olabilirsiniz!",
@@ -112,98 +120,98 @@ public class FinishScreen : MonoBehaviour
     "Neredeyse mükemmel",
     "Mükemmelliğe yakınsınız!",
     "Doğru yoldasınız",
-};
+    };
 
-
-    private void OnEnable()
-    {
-        SendStepCountEvent();
-    }
-
-    private void Awake()
-    {
-        _pointsLevelName = "PointsLevel" + SceneManager.GetActiveScene().buildIndex;
-    }
-
-    private void Start()
-    {
-        _currentLanguage = PlayerPrefs.GetString("_currentLanguage");
-        LoadLocalization();
-        SelectString();
-    }
-
-    private void LoadLocalization()
-    {
-        if (_currentLanguage == "ru")
+        private void OnEnable()
         {
-            _currentWinStrigs = _winStringsRussian;
-            _currentLoseStrigs = _loseStringsRussian;
-        }
-        if (_currentLanguage == "en")
-        {
-            _currentWinStrigs = _winStringsEnglish;
-            _currentLoseStrigs = _loseStringsEnglish;
-        }
-        if (_currentLanguage == "tr")
-        {
-            _currentWinStrigs = _winStringsTurkish;
-            _currentLoseStrigs = _loseStringsTurkish;
-        }
-    }
-
-    private void SelectString()
-    {
-        if (_stepCounter.StepCount <= _needStepCount)
-        {
-            int index = Random.Range(0, _currentWinStrigs.Length);
-            _string.text = _currentWinStrigs[index];
-        }
-        else
-        {
-            int index = Random.Range(0, _currentLoseStrigs.Length);
-            _string.text = _currentLoseStrigs[index];
-        }
-    }
-
-    public void SendStepCountEvent()
-    {
-        int stepCount = _stepCounter.StepCount;
-        int value;
-        _currentPointsCount = PlayerPrefs.GetInt(_pointsLevelName);
-
-        switch (stepCount)
-        {
-            case <= 8:
-                value = 3;
-                break;
-            case <= 12:
-                value = 2;
-                break;
-            case <= 15:
-                value = 1;
-                break;
-            default:
-                value = 0;
-                break;
+            SendStepCountEvent();
         }
 
-        if (_currentPointsCount < _maxPointsCount)
+        private void Awake()
         {
-            if (value > 0 && value > _currentPointsCount)
+            _pointsLevelName = "PointsLevel" + SceneManager.GetActiveScene().buildIndex;
+        }
+
+        private void Start()
+        {
+            _currentLanguage = PlayerPrefs.GetString("_currentLanguage");
+            LoadLocalization();
+            SelectString();
+        }
+
+        private void LoadLocalization()
+        {
+            if (_currentLanguage == "ru")
             {
-                _currentPointsCount = value;
-                PlayerPrefs.SetInt(_pointsLevelName, _currentPointsCount);
+                _currentWinStrigs = _winStringsRussian;
+                _currentLoseStrigs = _loseStringsRussian;
+            }
+            else if (_currentLanguage == "en")
+            {
+                _currentWinStrigs = _winStringsEnglish;
+                _currentLoseStrigs = _loseStringsEnglish;
+            }
+            else if (_currentLanguage == "tr")
+            {
+                _currentWinStrigs = _winStringsTurkish;
+                _currentLoseStrigs = _loseStringsTurkish;
             }
         }
 
-        DisplayStars(_currentPointsCount);
-    }
-
-    private void DisplayStars(int count)
-    {
-        for (int i = 0; i < count; i++)
+        private void SelectString()
         {
-            _stars[i].color = new Color(255, 255, 255);
+            if (_stepCounter.StepCount <= _needStepCount)
+            {
+                int index = Random.Range(0, _currentWinStrigs.Length);
+                _string.text = _currentWinStrigs[index];
+            }
+            else
+            {
+                int index = Random.Range(0, _currentLoseStrigs.Length);
+                _string.text = _currentLoseStrigs[index];
+            }
+        }
+
+        public void SendStepCountEvent()
+        {
+            int stepCount = _stepCounter.StepCount;
+            int value;
+            _currentPointsCount = PlayerPrefs.GetInt(_pointsLevelName);
+
+            switch (stepCount)
+            {
+                case <= 8:
+                    value = 3;
+                    break;
+                case <= 12:
+                    value = 2;
+                    break;
+                case <= 15:
+                    value = 1;
+                    break;
+                default:
+                    value = 0;
+                    break;
+            }
+
+            if (_currentPointsCount < _maxPointsCount)
+            {
+                if (value > 0 && value > _currentPointsCount)
+                {
+                    _currentPointsCount = value;
+                    PlayerPrefs.SetInt(_pointsLevelName, _currentPointsCount);
+                }
+            }
+
+            DisplayStars(_currentPointsCount);
+        }
+
+        private void DisplayStars(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                _stars[i].color = new Color(255, 255, 255);
+            }
         }
     }
 }

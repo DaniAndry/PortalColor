@@ -1,20 +1,24 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Focus : MonoBehaviour
+namespace UI
 {
-    public event UnityAction FocusIsBack;
-    public event UnityAction FocusMissing;
-
-    private void OnApplicationFocus(bool hasFocus)
+    public class Focus : MonoBehaviour
     {
-        if (hasFocus)
+        public event UnityAction FocusIsBack;
+
+        public event UnityAction FocusMissing;
+
+        private void OnApplicationFocus(bool hasFocus)
         {
-            FocusIsBack?.Invoke();
-        }
-        else
-        {
-            FocusMissing?.Invoke();
+            if (hasFocus)
+            {
+                FocusIsBack?.Invoke();
+            }
+            else
+            {
+                FocusMissing?.Invoke();
+            }
         }
     }
 }

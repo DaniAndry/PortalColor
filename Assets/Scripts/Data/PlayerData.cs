@@ -1,17 +1,21 @@
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+namespace Data
 {
-    private int _playerPoints;
-    private int _scoreCount;
-
-    public int PlayerPoints => _playerPoints;
-    public int ScoreCount => _scoreCount;
-
-    public PlayerData SetPlayerData(int playerPoints, int scoreCount)
+    public class PlayerData : MonoBehaviour
     {
-        _playerPoints = playerPoints;
-        _scoreCount = scoreCount;
-        return this;
+        private int _playerPoints;
+        private int _scoreCount;
+
+        public int PlayerPoints => _playerPoints;
+
+        public int ScoreCount => _scoreCount;
+
+        public PlayerData SetPlayerData(int playerPoints, int scoreCount)
+        {
+            _playerPoints = playerPoints;
+            _scoreCount = scoreCount;
+            return this;
+        }
     }
 }

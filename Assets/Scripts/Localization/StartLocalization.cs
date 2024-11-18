@@ -1,10 +1,13 @@
 using Agava.YandexGames;
 using UnityEngine;
 
-public class StartLocalization : MonoBehaviour
+namespace Localization
 {
-    private void Start()
+    public class StartLocalization : MonoBehaviour
     {
-        UnityEngine.PlayerPrefs.SetString("_currentLanguage", YandexGamesSdk.Environment.i18n.lang);
+        private void Start()
+        {
+            UnityEngine.PlayerPrefs.SetString("_currentLanguage", YandexGamesSdk.Environment.i18n.lang);
+        }
     }
 }

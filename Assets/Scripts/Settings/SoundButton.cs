@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SondButton : MonoBehaviour
+public class SoundButton : MonoBehaviour
 {
     [SerializeField] private AudioSource _audio;
 
@@ -10,5 +8,4 @@ public class SondButton : MonoBehaviour
     {
         _audio.Play();
     }
-
 }

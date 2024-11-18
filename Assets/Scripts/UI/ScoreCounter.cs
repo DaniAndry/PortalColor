@@ -2,36 +2,39 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class ScoreCounter : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TextMeshProUGUI _scoreText;
-
-    private float _timeToAnimate = 2f;
-    private float _updateFrequency = 0.05f;
-
-    private int _currentScore = 0;
-    private int _targetScore = 0;
-
-    public void SetScore(int newScore)
+    public class ScoreCounter : MonoBehaviour
     {
-        _targetScore = newScore;
-        StartCoroutine(UpdateScoreCoroutine());
-    }
+        [SerializeField] private TextMeshProUGUI _scoreText;
 
-    private IEnumerator UpdateScoreCoroutine()
-    {
-        int startScore = _currentScore;
-        int scoreDifference = _targetScore - startScore;
-        int steps = (int)(_timeToAnimate / _updateFrequency);
+        private float _timeToAnimate = 2f;
+        private float _updateFrequency = 0.05f;
 
-        for (int i = 1; i <= steps; i++)
+        private int _currentScore = 0;
+        private int _targetScore = 0;
+
+        public void SetScore(int newScore)
         {
-            int animatedScore = startScore + (int)((float)scoreDifference * i / steps);
-            _scoreText.text = animatedScore.ToString();
-            yield return new WaitForSeconds(_updateFrequency);
+            _targetScore = newScore;
+            StartCoroutine(UpdateScoreCoroutine());
         }
 
-        _currentScore = _targetScore;
-        _scoreText.text = _currentScore.ToString();
+        private IEnumerator UpdateScoreCoroutine()
+        {
+            int startScore = _currentScore;
+            int scoreDifference = _targetScore - startScore;
+            int steps = (int)(_timeToAnimate / _updateFrequency);
+
+            for (int i = 1; i <= steps; i++)
+            {
+                int animatedScore = startScore + (int)((float)scoreDifference * i / steps);
+                _scoreText.text = animatedScore.ToString();
+                yield return new WaitForSeconds(_updateFrequency);
+            }
+
+            _currentScore = _targetScore;
+            _scoreText.text = _currentScore.ToString();
+        }
     }
 }

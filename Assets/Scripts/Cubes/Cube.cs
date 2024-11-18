@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public abstract class Cube : MonoBehaviour
+namespace Cubes
 {
-    [SerializeField] protected GameObject ThisCenter;
+    public abstract class Cube : MonoBehaviour
+    {
+        [SerializeField] protected GameObject ThisCenter;
 
-    public GameObject Center => ThisCenter;
-
+        public GameObject Center => ThisCenter;
+    }
 }

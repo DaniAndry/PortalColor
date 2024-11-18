@@ -2,18 +2,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StarsInMenu : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private List<Image> _stars;
-    [SerializeField] private int _level;
-
-    public void Start()
+    public class StarsInMenu : MonoBehaviour
     {
-        int starsCount = PlayerPrefs.GetInt("PointsLevel" + _level, 0);
+        [SerializeField] private List<Image> _stars;
+        [SerializeField] private int _level;
 
-        for (int i = 0; i < starsCount; i++)
+        public void Start()
         {
-            _stars[i].color = new Color(255, 255, 255, 255);
+            int starsCount = PlayerPrefs.GetInt("PointsLevel" + _level, 0);
+
+            for (int i = 0; i < starsCount; i++)
+            {
+                _stars[i].color = new Color(255, 255, 255, 255);
+            }
         }
     }
 }

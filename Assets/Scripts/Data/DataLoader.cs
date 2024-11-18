@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public class DataLoader : MonoBehaviour
+namespace Data
 {
-    private PlayerData _playerData;
-    private JsonSaver _jsonSaver;
-
-    private void Start()
+    public class DataLoader : MonoBehaviour
     {
-        _jsonSaver = GetComponent<JsonSaver>();
-    }
+        private PlayerData _playerData;
+        private JsonSaver _jsonSaver;
 
-    public void LoadPlayerData()
-    {
-        _playerData = _jsonSaver.LoadData();
+        private void Start()
+        {
+            _jsonSaver = GetComponent<JsonSaver>();
+        }
 
-        PlayerPrefs.SetInt("PlayerPoints", _playerData.PlayerPoints);
-        PlayerPrefs.SetInt("ScoreCount", _playerData.ScoreCount);
+        public void LoadPlayerData()
+        {
+            _playerData = _jsonSaver.LoadData();
+
+            PlayerPrefs.SetInt("PlayerPoints", _playerData.PlayerPoints);
+            PlayerPrefs.SetInt("ScoreCount", _playerData.ScoreCount);
+        }
     }
 }

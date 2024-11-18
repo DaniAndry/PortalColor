@@ -1,54 +1,58 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
+using PlayerSpace;
 
-[RequireComponent(typeof(AudioSource))]
-public class FinalCube : Cube
+namespace Cubes
 {
-    public event UnityAction Finished;
-
-    [SerializeField] private List<ParticleSystem> _particles;
-    [SerializeField] private GameObject _finishPanel;
-    [SerializeField] private GameObject _gamePanel;
-
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _applause;
-    [SerializeField] private AudioClip _win;
-
-    private void OnTriggerEnter(Collider collision)
+    [RequireComponent(typeof(AudioSource))]
+    public class FinalCube : Cube
     {
-        if (collision.gameObject.TryGetComponent<Player>(out Player player))
+        public event UnityAction Finished;
+
+        [SerializeField] private List<ParticleSystem> _particles;
+        [SerializeField] private GameObject _finishPanel;
+        [SerializeField] private GameObject _gamePanel;
+
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _applause;
+        [SerializeField] private AudioClip _win;
+
+        private void OnTriggerEnter(Collider collision)
         {
-            StartCoroutine(PlayWinAudio());
-            foreach (ParticleSystem particle in _particles)
+            if (collision.gameObject.TryGetComponent<Player>(out Player player))
             {
-                particle.Play();
+                StartCoroutine(PlayWinAudio());
+                foreach (ParticleSystem particle in _particles)
+                {
+                    particle.Play();
+                }
+
+                Invoke(nameof(ActivatePanel), 1f);
+                Destroy(player.gameObject);
+            }
+        }
+
+        private IEnumerator PlayWinAudio()
+        {
+            _audioSource.clip = _win;
+            _audioSource.Play();
+
+            while (_audioSource.isPlaying)
+            {
+                yield return null;
             }
 
-            Invoke(nameof(ActivatePanel), 1f);
-            Destroy(player.gameObject);
+            _audioSource.clip = _applause;
+            _audioSource.Play();
         }
-    }
 
-    private IEnumerator PlayWinAudio()
-    {
-        _audioSource.clip = _win;
-        _audioSource.Play();
-
-        while (_audioSource.isPlaying)
+        private void ActivatePanel()
         {
-            yield return null;
+            _finishPanel.SetActive(true);
+            _gamePanel.SetActive(false);
+            Finished?.Invoke();
         }
-
-        _audioSource.clip = _applause;
-        _audioSource.Play();
-    }
-
-    private void ActivatePanel()
-    {
-        _finishPanel.SetActive(true);
-        _gamePanel.SetActive(false);
-        Finished?.Invoke();
     }
 }

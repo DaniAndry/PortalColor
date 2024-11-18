@@ -1,18 +1,22 @@
 using UnityEngine;
+using Data;
 
-public class Unlocker : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private LevelUnlocker[] levelUnlockers;
-    [SerializeField] private Points _points;
-    [SerializeField] private NeedPoints _needPoints;
-
-    private void Start()
+    public class Unlocker : MonoBehaviour
     {
-        for (int i = 0; i < levelUnlockers.Length; i++)
+        [SerializeField] private LevelUnlocker[] levelUnlockers;
+        [SerializeField] private Points _points;
+        [SerializeField] private NeedPoints _needPoints;
+
+        private void Start()
         {
-            if (_needPoints.TryToEnter(i, _points.Calculate()))
+            for (int i = 0; i < levelUnlockers.Length; i++)
             {
-                levelUnlockers[i].StartToUnlock(_points.Calculate());
+                if (_needPoints.TryToEnter(i, _points.Calculate()))
+                {
+                    levelUnlockers[i].StartToUnlock(_points.Calculate());
+                }
             }
         }
     }

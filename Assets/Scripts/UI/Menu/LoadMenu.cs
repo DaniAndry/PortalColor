@@ -9,6 +9,7 @@ public class LoadMenu : MonoBehaviour
     {
         _sdk.SDKInitialized += Load;
     }
+
     private void Load()
     {
         SceneManager.LoadScene(1);

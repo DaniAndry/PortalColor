@@ -2,13 +2,13 @@ using System.Collections;
 using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.Events;
-
+using Data;
 
 public class InitializingSDK : MonoBehaviour
 {
     public UnityAction SDKInitialized;
 
-    [SerializeField] DataLoader _dataLoader;
+    [SerializeField] private DataLoader _dataLoader;
 
     private void Awake()
     {
@@ -29,4 +29,3 @@ public class InitializingSDK : MonoBehaviour
         }
     }
 }
-

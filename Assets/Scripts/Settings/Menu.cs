@@ -8,7 +8,7 @@ public class Menu : MonoBehaviour
 
     private bool _isOpen;
 
-    public bool isOpen => _isOpen;
+    public bool IsOpen => _isOpen;
 
     public void OpenMenu()
     {
@@ -29,7 +29,6 @@ public class Menu : MonoBehaviour
         _mainPanel.SetActive(false);
         _settingsPanel.SetActive(true);
     }
-
 
     public void CloseSettings()
     {

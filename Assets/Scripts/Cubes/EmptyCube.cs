@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class EmptyCube : Cube
+namespace Cubes
 {
-
+    public class EmptyCube : Cube
+    { }
 }

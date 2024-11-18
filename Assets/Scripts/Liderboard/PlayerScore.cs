@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerScore : Score
+namespace LeaderboardSpace
 {
-    [SerializeField] private TMP_Text _rank;
-
-    public void SetRank(int rank)
+    public class PlayerScore : Score
     {
-        _rank.text = rank.ToString();
+        [SerializeField] private TMP_Text _rank;
+
+        public void SetRank(int rank)
+        {
+            _rank.text = rank.ToString();
+        }
     }
 }

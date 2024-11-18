@@ -1,53 +1,58 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Data;
 
-public class NextSceneButton : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private NeedPoints _needPoints;
-    [SerializeField] private Points _points;
-    [SerializeField] private GameObject _notEnoughPoint;
-    [SerializeField] private GameObject _clock;
-
-    private int _currentSceneIndex;
-
-    private void Start()
+    public class NextSceneButton : MonoBehaviour
     {
-        _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        _points.Calculate();
-        _clock.SetActive(false);
-    }
+        [SerializeField] private NeedPoints _needPoints;
+        [SerializeField] private Points _points;
+        [SerializeField] private GameObject _notEnoughPoint;
+        [SerializeField] private GameObject _clock;
 
-    public void LoadNextScene()
-    {
-        _notEnoughPoint.SetActive(false);
+        private int _currentSceneIndex;
 
-        int nextSceneIndex = _currentSceneIndex + 1;
-
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings&& IsPointsEnough())
+        private void Start()
         {
-            SceneManager.LoadScene(nextSceneIndex);
+            _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            _points.Calculate();
+            _clock.SetActive(false);
         }
-        else
-        {
-            _notEnoughPoint.SetActive(true);
-        }
-    }
 
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(_currentSceneIndex);
-    }
+        public void LoadNextScene()
+        {
+            _notEnoughPoint.SetActive(false);
 
-    private bool IsPointsEnough()
-    {
-        if (_needPoints.TryToEnter(_currentSceneIndex-2, _points.Calculate()))
-        {
-            return true;
+            int nextSceneIndex = _currentSceneIndex + 1;
+
+            if ((nextSceneIndex < SceneManager.sceneCountInBuildSettings) && IsPointsEnough())
+            {
+                SceneManager.LoadScene(nextSceneIndex);
+            }
+            else
+            {
+                _notEnoughPoint.SetActive(true);
+            }
         }
-        else
+
+        public void ReloadScene()
         {
-            return false;
+            SceneManager.LoadScene(_currentSceneIndex);
+        }
+
+        private bool IsPointsEnough()
+        {
+            int needIndex = _currentSceneIndex - 2;
+
+            if (_needPoints.TryToEnter(needIndex, _points.Calculate()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
-

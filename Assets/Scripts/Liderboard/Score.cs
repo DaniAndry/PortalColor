@@ -1,19 +1,21 @@
 using TMPro;
 using UnityEngine;
 
-public class Score : MonoBehaviour
+namespace LeaderboardSpace
 {
-    [SerializeField] private TMP_Text _name;
-    [SerializeField] private TMP_Text _score;
-
-    public void SetName(string name)
+    public class Score : MonoBehaviour
     {
-        _name.text = name;
-    }
+        [SerializeField] private TMP_Text _name;
+        [SerializeField] private TMP_Text _score;
 
-    public void SetScore(string score)
-    {
-        _score.text = score;
+        public void SetName(string name)
+        {
+            _name.text = name;
+        }
+
+        public void SetScore(string score)
+        {
+            _score.text = score;
+        }
     }
 }
-

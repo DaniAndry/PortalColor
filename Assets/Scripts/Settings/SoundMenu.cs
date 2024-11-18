@@ -1,30 +1,35 @@
 using UnityEngine;
+using UI;
 
-public class SoundMenu : MonoBehaviour
+namespace Settings
 {
-    [SerializeField] private AudioSource _music;
-    private Focus _focus;
-
-    private void Start()
+    public class SoundMenu : MonoBehaviour
     {
-        _focus = GetComponent<Focus>();
-        _focus.FocusMissing += StopSounds;
-        _focus.FocusIsBack += PlaySounds;
-    }
+        [SerializeField] private AudioSource _music;
 
-    private void OnDisable()
-    {
-        _focus.FocusMissing -= StopSounds;
-        _focus.FocusIsBack -= PlaySounds;
-    }
+        private Focus _focus;
 
-    private void StopSounds()
-    {
-        _music.Pause();
+        private void Start()
+        {
+            _focus = GetComponent<Focus>();
+            _focus.FocusMissing += StopSounds;
+            _focus.FocusIsBack += PlaySounds;
+        }
 
-    }
-    private void PlaySounds()
-    {
-        _music.Play();
+        private void OnDisable()
+        {
+            _focus.FocusMissing -= StopSounds;
+            _focus.FocusIsBack -= PlaySounds;
+        }
+
+        private void StopSounds()
+        {
+            _music.Pause();
+        }
+
+        private void PlaySounds()
+        {
+            _music.Play();
+        }
     }
 }

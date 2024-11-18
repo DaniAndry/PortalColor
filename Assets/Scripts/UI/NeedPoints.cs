@@ -1,30 +1,33 @@
 using UnityEngine;
 
-public class NeedPoints : MonoBehaviour
+namespace UI
 {
-    public bool TryToEnter(int numberLevel, int countPoints)
+    public class NeedPoints : MonoBehaviour
     {
-        int needpoints = 2;
-
-        for (int i = 0; i < numberLevel; i++)
+        public bool TryToEnter(int numberLevel, int countPoints)
         {
-            if (numberLevel < 4)
+            int needpoints = 2;
+
+            for (int i = 0; i < numberLevel; i++)
             {
-                needpoints += 3;
+                if (numberLevel < 4)
+                {
+                    needpoints += 3;
+                }
+                else
+                {
+                    needpoints += 2;
+                }
+            }
+
+            if (countPoints >= needpoints)
+            {
+                return true;
             }
             else
             {
-                needpoints += 2;
+                return false;
             }
-        }
-
-        if (countPoints >= needpoints)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }

@@ -1,43 +1,46 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
-public class LevelButton : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private int _levelNumber;
-    [SerializeField] private ParticleSystem _particle;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _clickSound;
-    [SerializeField] private AudioClip _blockedClickSound;
-    [SerializeField] private bool _isBlocked;
-
-    public int LeveNumber => _levelNumber;
-
-    public void OnClick()
+    public class LevelButton : MonoBehaviour
     {
-        if (_isBlocked)
+        [SerializeField] private int _levelNumber;
+        [SerializeField] private ParticleSystem _particle;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _clickSound;
+        [SerializeField] private AudioClip _blockedClickSound;
+        [SerializeField] private bool _isBlocked;
+
+        public int LeveNumber => _levelNumber;
+
+        public void OnClick()
         {
-            _audioSource.clip = _blockedClickSound;
-            _audioSource.Play();
+            if (_isBlocked)
+            {
+                _audioSource.clip = _blockedClickSound;
+                _audioSource.Play();
+            }
+            else
+            {
+                _audioSource.clip = _clickSound;
+                _audioSource.Play();
+                _particle.Play();
+                StartCoroutine(LoadSceneAfterDelay(0.7f));
+            }
         }
-        else
+
+        public void Unlock()
         {
-            _audioSource.clip = _clickSound;
-            _audioSource.Play();
-            _particle.Play();
-            StartCoroutine(LoadSceneAfterDelay(0.7f));
+            _isBlocked = false;
         }
-    }
 
-    public void Unlock()
-    {
-        _isBlocked = false;
-    }
+        private IEnumerator LoadSceneAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
 
-    private IEnumerator LoadSceneAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        SceneManager.LoadScene(_levelNumber);
+            SceneManager.LoadScene(_levelNumber);
+        }
     }
 }

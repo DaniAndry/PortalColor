@@ -1,34 +1,39 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using PlayerSpace;
 
-public class StepCounter : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TextMeshProUGUI _count;
-    [SerializeField] private PlayerMover _player;
-    private Animation _animation;
-    private int _stepCount;
-
-    public int StepCount => _stepCount;
-
-    private void Start()
+    public class StepCounter : MonoBehaviour
     {
-        _animation = GetComponent<Animation>();
-    }
+        [SerializeField] private TextMeshProUGUI _count;
+        [SerializeField] private PlayerMover _player;
 
-    private void OnEnable()
-    {
-        _player.StepCountChanged += OnValueChanged;
-    }
+        private Animation _animation;
+        private int _stepCount;
 
-    private void OnDisable()
-    {
-        _player.StepCountChanged -= OnValueChanged;
-    }
+        public int StepCount => _stepCount;
 
-    private void OnValueChanged()
-    {
-        _stepCount++;
-        _animation.Play();
-        _count.text = _stepCount.ToString();
+        private void Start()
+        {
+            _animation = GetComponent<Animation>();
+        }
+
+        private void OnEnable()
+        {
+            _player.StepCountChanged += OnValueChanged;
+        }
+
+        private void OnDisable()
+        {
+            _player.StepCountChanged -= OnValueChanged;
+        }
+
+        private void OnValueChanged()
+        {
+            _stepCount++;
+            _animation.Play();
+            _count.text = _stepCount.ToString();
+        }
     }
 }
