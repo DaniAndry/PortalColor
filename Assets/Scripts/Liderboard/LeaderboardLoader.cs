@@ -7,16 +7,13 @@ namespace LeaderboardSpace
     {
         private const int MaxRecordsToShow = 7;
 
-        private string _anonymous;
-
         [SerializeField] private Score[] _scores;
         [SerializeField] private PlayerScore _playerScore;
 
         private string _leaderboardName = "Score";
         private string _currentLanguage;
+        private string _anonymous;
         private int _currentScore;
-
-        public string LeaderboardName => _leaderboardName;
 
         private void Start()
         {

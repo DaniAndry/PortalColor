@@ -7,6 +7,10 @@ namespace UI
 {
     public class FinishScreen : MonoBehaviour
     {
+        private const int MaxStepForThreeStars = 8;
+        private const int MaxStepForTwoStars = 12;
+        private const int MaxStepForOneStars = 15;
+
         [SerializeField] private StepCounter _stepCounter;
         [SerializeField] private TextMeshProUGUI _string;
         [SerializeField] private Image[] _stars;
@@ -122,14 +126,14 @@ namespace UI
     "Doğru yoldasınız",
     };
 
-        private void OnEnable()
-        {
-            SendStepCountEvent();
-        }
 
         private void Awake()
         {
             _pointsLevelName = "PointsLevel" + SceneManager.GetActiveScene().buildIndex;
+        }
+        private void OnEnable()
+        {
+            SendStepCountEvent();
         }
 
         private void Start()
@@ -141,35 +145,36 @@ namespace UI
 
         private void LoadLocalization()
         {
-            if (_currentLanguage == "ru")
+            switch (_currentLanguage)
             {
-                _currentWinStrigs = _winStringsRussian;
-                _currentLoseStrigs = _loseStringsRussian;
+                case "ru":
+                    SetLocalizationStrings(_winStringsRussian, _loseStringsRussian);
+                    break;
+                case "en":
+                    SetLocalizationStrings(_winStringsEnglish, _loseStringsEnglish);
+                    break;
+                case "tr":
+                    SetLocalizationStrings(_winStringsTurkish, _loseStringsTurkish);
+                    break;
             }
-            else if (_currentLanguage == "en")
-            {
-                _currentWinStrigs = _winStringsEnglish;
-                _currentLoseStrigs = _loseStringsEnglish;
-            }
-            else if (_currentLanguage == "tr")
-            {
-                _currentWinStrigs = _winStringsTurkish;
-                _currentLoseStrigs = _loseStringsTurkish;
-            }
+        }
+
+        private void SetLocalizationStrings(string[] winStrings, string[] loseStrings)
+        {
+            _currentWinStrigs = winStrings;
+            _currentLoseStrigs = loseStrings;
         }
 
         private void SelectString()
         {
-            if (_stepCounter.StepCount <= _needStepCount)
-            {
-                int index = Random.Range(0, _currentWinStrigs.Length);
-                _string.text = _currentWinStrigs[index];
-            }
-            else
-            {
-                int index = Random.Range(0, _currentLoseStrigs.Length);
-                _string.text = _currentLoseStrigs[index];
-            }
+            string[] targetStrings = (_stepCounter.StepCount <= _needStepCount) ? _currentWinStrigs : _currentLoseStrigs;
+            SetRandomText(targetStrings);
+        }
+
+        private void SetRandomText(string[] stringsArray)
+        {
+            int index = Random.Range(0, stringsArray.Length);
+            _string.text = stringsArray[index];
         }
 
         public void SendStepCountEvent()
@@ -180,13 +185,13 @@ namespace UI
 
             switch (stepCount)
             {
-                case <= 8:
+                case <= MaxStepForThreeStars:
                     value = 3;
                     break;
-                case <= 12:
+                case <= MaxStepForTwoStars:
                     value = 2;
                     break;
-                case <= 15:
+                case <= MaxStepForOneStars:
                     value = 1;
                     break;
                 default:
@@ -210,7 +215,7 @@ namespace UI
         {
             for (int i = 0; i < count; i++)
             {
-                _stars[i].color = new Color(255, 255, 255);
+                _stars[i].color = Color.white;
             }
         }
     }

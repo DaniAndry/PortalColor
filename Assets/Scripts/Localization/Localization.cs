@@ -6,15 +6,10 @@ namespace Localization
     public class Localization : MonoBehaviour
     {
         [SerializeField] private LeanLocalization _leanLocalization;
+
         private string _language;
 
         private void Start()
-        {
-            _language = PlayerPrefs.GetString("_currentLanguage");
-            SelectLocalization(_language);
-        }
-
-        private void Select()
         {
             _language = PlayerPrefs.GetString("_currentLanguage");
             SelectLocalization(_language);

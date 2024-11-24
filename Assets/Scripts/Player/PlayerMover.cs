@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using Cubes;
+using UI;
 
 namespace PlayerSpace
 {
@@ -15,14 +16,12 @@ namespace PlayerSpace
 
         private bool _isMoving;
 
-        public event UnityAction StepCountChanged;
-
-        public event UnityAction Moved;
-
-        public event UnityAction Stoped;
-
         private Vector2 _startTouchPosition;
         private Vector2 _endTouchPosition;
+
+        public event UnityAction StepCountChanged;
+        public event UnityAction Moved;
+        public event UnityAction Stoped;
 
         private void Update()
         {

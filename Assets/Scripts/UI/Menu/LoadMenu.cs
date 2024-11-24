@@ -1,17 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SDK;
 
-public class LoadMenu : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private InitializingSDK _sdk;
-
-    private void OnEnable()
+    public class LoadMenu : MonoBehaviour
     {
-        _sdk.SDKInitialized += Load;
-    }
+        [SerializeField] private InitializingSDK _sdk;
 
-    private void Load()
-    {
-        SceneManager.LoadScene(1);
+        private void OnEnable()
+        {
+            _sdk.SDKInitialized += Load;
+        }
+
+        private void Load()
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 }

@@ -6,28 +6,24 @@ namespace UI
     {
         public bool TryToEnter(int numberLevel, int countPoints)
         {
-            int needpoints = 2;
+            int requiredPoints = 2;
+            int basePoints = 2;
+            int incrementPoints = 3;
+            int incrementLevel = 4;
 
             for (int i = 0; i < numberLevel; i++)
             {
-                if (numberLevel < 4)
+                if (numberLevel < incrementLevel)
                 {
-                    needpoints += 3;
+                    requiredPoints += incrementPoints;
                 }
                 else
                 {
-                    needpoints += 2;
+                    requiredPoints += basePoints;
                 }
             }
 
-            if (countPoints >= needpoints)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return countPoints >= requiredPoints;
         }
     }
 }

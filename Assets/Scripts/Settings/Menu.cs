@@ -1,38 +1,41 @@
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private GameObject _settingsPanel;
-    [SerializeField] private GameObject _mainPanel;
-    [SerializeField] private GameObject _clock;
-
-    private bool _isOpen;
-
-    public bool IsOpen => _isOpen;
-
-    public void OpenMenu()
+    public class Menu : MonoBehaviour
     {
-        _mainPanel.SetActive(true);
-        _clock.SetActive(false);
-        _isOpen = true;
-    }
+        [SerializeField] private GameObject _settingsPanel;
+        [SerializeField] private GameObject _mainPanel;
+        [SerializeField] private GameObject _clock;
 
-    public void CloseMenu()
-    {
-        _mainPanel.SetActive(false);
-        _clock.SetActive(true);
-        _isOpen = false;
-    }
+        private bool _isOpen;
 
-    public void OpenSettings()
-    {
-        _mainPanel.SetActive(false);
-        _settingsPanel.SetActive(true);
-    }
+        public bool IsOpen => _isOpen;
 
-    public void CloseSettings()
-    {
-        _mainPanel.SetActive(true);
-        _settingsPanel.SetActive(false);
+        public void OpenMenu()
+        {
+            _mainPanel.SetActive(true);
+            _clock.SetActive(false);
+            _isOpen = true;
+        }
+
+        public void CloseMenu()
+        {
+            _mainPanel.SetActive(false);
+            _clock.SetActive(true);
+            _isOpen = false;
+        }
+
+        public void OpenSettings()
+        {
+            _mainPanel.SetActive(false);
+            _settingsPanel.SetActive(true);
+        }
+
+        public void CloseSettings()
+        {
+            _mainPanel.SetActive(true);
+            _settingsPanel.SetActive(false);
+        }
     }
 }

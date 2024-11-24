@@ -4,28 +4,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using Data;
 
-public class InitializingSDK : MonoBehaviour
+namespace SDK
 {
-    public UnityAction SDKInitialized;
-
-    [SerializeField] private DataLoader _dataLoader;
-
-    private void Awake()
+    public class InitializingSDK : MonoBehaviour
     {
-        YandexGamesSdk.CallbackLogging = true;
-        UnityEngine.PlayerPrefs.SetFloat("SoundVolume", 100);
-        UnityEngine.PlayerPrefs.SetFloat("MusicVolume", 100);
-    }
+        public UnityAction SDKInitialized;
 
-    private IEnumerator Start()
-    {
-        yield return YandexGamesSdk.Initialize();
+        [SerializeField] private DataLoader _dataLoader;
 
-        if (SDKInitialized != null)
+        private void Awake()
         {
-            SDKInitialized?.Invoke();
-            UnityEngine.PlayerPrefs.SetString("_currentLanguage", YandexGamesSdk.Environment.i18n.lang);
-            _dataLoader.LoadPlayerData();
+            YandexGamesSdk.CallbackLogging = true;
+            UnityEngine.PlayerPrefs.SetFloat("SoundVolume", 100);
+            UnityEngine.PlayerPrefs.SetFloat("MusicVolume", 100);
+        }
+
+        private IEnumerator Start()
+        {
+            yield return YandexGamesSdk.Initialize();
+
+            if (SDKInitialized != null)
+            {
+                SDKInitialized?.Invoke();
+                UnityEngine.PlayerPrefs.SetString("_currentLanguage", YandexGamesSdk.Environment.i18n.lang);
+                _dataLoader.LoadPlayerData();
+            }
         }
     }
 }

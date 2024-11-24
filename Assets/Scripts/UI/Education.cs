@@ -6,68 +6,69 @@ namespace UI
 {
     public class Education : MonoBehaviour
     {
-        [SerializeField] private GameObject _horrizontalSlider;
+        [SerializeField] private GameObject _horizontalSlider;
         [SerializeField] private GameObject _verticalSlider;
         [SerializeField] private GameObject _educationPanel;
-        [SerializeField] private GameObject _horrizontalButtons;
+        [SerializeField] private GameObject _horizontalButtons;
         [SerializeField] private GameObject _verticalButtons;
         [SerializeField] private PlayerMover _playerMover;
 
-        private bool _isEducationEnabled;
-        private bool _isHorrizontalMoved;
+        private bool _isEducationEnabled = true;
+        private bool _isHorizontalMoved = false;
         private bool _isMobileGame;
 
         private void Start()
         {
-            _isEducationEnabled = true;
-            _isHorrizontalMoved = false;
             _educationPanel.SetActive(true);
 
             if (Device.IsMobile)
             {
                 _isMobileGame = true;
-                _horrizontalSlider.SetActive(true);
+                _horizontalSlider.SetActive(true);
             }
             else
             {
                 _isMobileGame = false;
-                _horrizontalButtons.SetActive(true);
+                _horizontalButtons.SetActive(true);
+            }
+
+            _playerMover.Moved += OnPlayerMove;
+        }
+
+        private void OnPlayerMove()
+        {
+            if (_isEducationEnabled)
+            {
+                if (!_isHorizontalMoved)
+                {
+                    HandleHorizontalMove();
+                }
+                else
+                {
+                    HandleVerticalMove();
+                }
             }
         }
 
-        private void Update()
+        private void HandleHorizontalMove()
         {
-            if (_isEducationEnabled && !_isHorrizontalMoved)
-            {
-                _playerMover.Moved += HorrizontalMove;
-            }
-            else if (_isEducationEnabled && _isHorrizontalMoved)
-            {
-                _playerMover.Moved += VerticalMove;
-            }
+            _isHorizontalMoved = true;
+            ToggleUI(_isMobileGame ? _horizontalSlider : _horizontalButtons,
+                     _isMobileGame ? _verticalSlider : _verticalButtons);
         }
 
-        private void HorrizontalMove()
+        private void HandleVerticalMove()
         {
-            _isHorrizontalMoved = true;
-
-            if (_isMobileGame)
-            {
-                _horrizontalSlider.SetActive(false);
-                _verticalSlider.SetActive(true);
-            }
-            else
-            {
-                _horrizontalButtons.SetActive(false);
-                _verticalButtons.SetActive(true);
-            }
-        }
-
-        private void VerticalMove()
-        {
-            _verticalButtons.SetActive(false);
-            _verticalSlider.SetActive(false);
+            ToggleUI(_isMobileGame ? _verticalSlider : _verticalButtons, null);
             _educationPanel.SetActive(false);
+            _isEducationEnabled = false;
+        }
+
+        private void ToggleUI(GameObject hideObject, GameObject showObject)
+        {
+            hideObject.SetActive(false);
+            if (showObject != null)
+                showObject.SetActive(true);
         }
     }
 }

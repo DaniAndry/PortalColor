@@ -9,15 +9,14 @@ namespace Cubes
     [RequireComponent(typeof(AudioSource))]
     public class FinalCube : Cube
     {
-        public event UnityAction Finished;
-
         [SerializeField] private List<ParticleSystem> _particles;
         [SerializeField] private GameObject _finishPanel;
         [SerializeField] private GameObject _gamePanel;
-
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _applause;
         [SerializeField] private AudioClip _win;
+
+        public event UnityAction Finished;
 
         private void OnTriggerEnter(Collider collision)
         {

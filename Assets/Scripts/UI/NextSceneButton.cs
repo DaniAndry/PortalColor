@@ -45,14 +45,8 @@ namespace UI
         {
             int needIndex = _currentSceneIndex - 2;
 
-            if (_needPoints.TryToEnter(needIndex, _points.Calculate()))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _needPoints.TryToEnter(needIndex, _points.Calculate());
+
         }
     }
 }

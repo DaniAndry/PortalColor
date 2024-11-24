@@ -14,7 +14,6 @@ namespace UI
 
         private bool _isStartPanelActive;
         private bool _isSettingsPanelActive;
-        private bool _isLeaderboardActive;
         private bool _isMenuPanelActive;
 
         private void Start()
@@ -26,7 +25,6 @@ namespace UI
         {
             _isStartPanelActive = _startPanel.activeSelf;
             _isSettingsPanelActive = _settingsPanel.activeSelf;
-            _isLeaderboardActive = _leaderboard.activeSelf;
             _menuPanel.SetActive(true);
             _startPanel.SetActive(false);
             _leaderboardButton.SetActive(false);
@@ -35,7 +33,6 @@ namespace UI
         public void OpenSettings()
         {
             _isStartPanelActive = _startPanel.activeSelf;
-            _isLeaderboardActive = _leaderboard.activeSelf;
             _startPanel.SetActive(false);
             _settingsPanel.SetActive(true);
         }

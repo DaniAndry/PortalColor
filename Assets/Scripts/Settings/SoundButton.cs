@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class SoundButton : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private AudioSource _audio;
-
-    public void Play()
+    public class SoundButton : MonoBehaviour
     {
-        _audio.Play();
+        [SerializeField] private AudioSource _audio;
+
+        public void Play()
+        {
+            _audio.Play();
+        }
     }
 }

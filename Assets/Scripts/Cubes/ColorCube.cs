@@ -1,18 +1,20 @@
 using UnityEngine;
-using Cubes;
 using PlayerSpace;
 
-public class ColorCube : Cube
+namespace Cubes
 {
-    [SerializeField] private Cube _targetCube;
-    [SerializeField] private ParticleSystem _particle;
-
-    private void OnTriggerEnter(Collider collision)
+    public class ColorCube : Cube
     {
-        if (collision.gameObject.TryGetComponent<PlayerTeleport>(out PlayerTeleport player))
+        [SerializeField] private Cube _targetCube;
+        [SerializeField] private ParticleSystem _particle;
+
+        private void OnTriggerEnter(Collider collision)
         {
-            player.Teleportation(_targetCube.Center.transform.position);
-            _particle.Play();
+            if (collision.gameObject.TryGetComponent<PlayerTeleport>(out PlayerTeleport player))
+            {
+                player.Teleportation(_targetCube.Center.transform.position);
+                _particle.Play();
+            }
         }
     }
 }

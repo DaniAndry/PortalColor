@@ -17,6 +17,8 @@ namespace UI
         private bool _isRun = true;
 
         private float _seconds;
+        private float _secondsInMinute = 60f;
+        private float _circle = 360f;
 
         private void Start()
         {
@@ -79,7 +81,7 @@ namespace UI
 
         private void RotateClockHand()
         {
-            float secondRotation = 360f * _seconds / 60f;
+            float secondRotation = _circle * _seconds / _secondsInMinute;
 
             _secondHand.localRotation = Quaternion.Euler(0f, 0f, -secondRotation);
         }

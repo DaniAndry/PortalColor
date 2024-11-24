@@ -17,79 +17,52 @@ namespace Settings
         private bool _isMusic;
         private bool _isSound;
 
+        private const float _fullVolume = 100f;
+
         private void Start()
         {
-            _music.volume = PlayerPrefs.GetFloat("MusicVolume");
-            _sound.volume = PlayerPrefs.GetFloat("SoundVolume");
-            _finish.volume = PlayerPrefs.GetFloat("SoundVolume");
-            _isMusic = PlayerPrefs.GetFloat("MusicVolume") > 0;
-            _isSound = PlayerPrefs.GetFloat("SoundVolume") > 0;
+            _music.volume = PlayerPrefs.GetFloat("MusicVolume", _fullVolume);
+            _sound.volume = PlayerPrefs.GetFloat("SoundVolume", _fullVolume);
+            _finish.volume = _sound.volume;
 
-            ChangeImage();
+            _isMusic = _music.volume > 0;
+            _isSound = _sound.volume > 0;
+
+            ChangeImage(_isMusic, _musicImage, _musicImageStop);
+            ChangeImage(_isSound, _soundImage, _soundImageStop);
         }
 
-        public void SwichVolumeMusic()
+        public void SwitchVolumeMusic()
         {
-            if (_music.volume == 0)
-            {
-                PlayerPrefs.SetFloat("MusicVolume", 100f);
-                _music.volume = PlayerPrefs.GetFloat("MusicVolume");
-                _isMusic = true;
-                ChangeImage();
-            }
-            else
-            {
-                PlayerPrefs.SetInt("MusicVolume", 0);
-                _music.volume = PlayerPrefs.GetFloat("MusicVolume");
-                _isMusic = false;
-                ChangeImage();
-            }
+            _isMusic = ToggleVolume(ref _music, "MusicVolume");
+            ChangeImage(_isMusic, _musicImage, _musicImageStop);
         }
 
-        public void SwichVolumeSound()
+        public void SwitchVolumeSound()
         {
-            if (!_isSound)
-            {
-                PlayerPrefs.SetFloat("SoundVolume", 100);
-                _sound.volume = PlayerPrefs.GetFloat("SoundVolume");
-                _finish.volume = PlayerPrefs.GetFloat("SoundVolume");
-                _isSound = true;
-                ChangeImage();
-            }
-            else
-            {
-                PlayerPrefs.SetFloat("SoundVolume", 0);
-                PlayerPrefs.SetFloat("SoundVolume", 0);
-                _sound.volume = PlayerPrefs.GetFloat("SoundVolume");
-                _finish.volume = PlayerPrefs.GetFloat("SoundVolume");
-                _isSound = false;
-                ChangeImage();
-            }
+            _isSound = ToggleVolume(ref _sound, "SoundVolume");
+            _finish.volume = _sound.volume;
+            ChangeImage(_isSound, _soundImage, _soundImageStop);
         }
 
-        private void ChangeImage()
+        private bool ToggleVolume(ref AudioSource audioSource, string playerPrefKey)
         {
-            if (!_isMusic)
+            if (audioSource.volume == 0)
             {
-                _musicImage.gameObject.SetActive(false);
-                _musicImageStop.gameObject.SetActive(true);
+                PlayerPrefs.SetFloat(playerPrefKey, _fullVolume);
             }
             else
             {
-                _musicImageStop.gameObject.SetActive(false);
-                _musicImage.gameObject.SetActive(true);
+                PlayerPrefs.SetFloat(playerPrefKey, 0);
             }
+            audioSource.volume = PlayerPrefs.GetFloat(playerPrefKey);
+            return audioSource.volume > 0;
+        }
 
-            if (!_isSound)
-            {
-                _soundImage.gameObject.SetActive(false);
-                _soundImageStop.gameObject.SetActive(true);
-            }
-            else
-            {
-                _soundImage.gameObject.SetActive(true);
-                _soundImageStop.gameObject.SetActive(false);
-            }
+        private void ChangeImage(bool isActive, Image activeImage, Image stopImage)
+        {
+            activeImage.gameObject.SetActive(isActive);
+            stopImage.gameObject.SetActive(!isActive);
         }
     }
 }

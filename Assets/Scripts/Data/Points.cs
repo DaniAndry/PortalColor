@@ -9,25 +9,16 @@ namespace Data
 
         private PlayerData _playerData;
         private JsonSaver _jsonSaver;
+
         private int _count;
         private int _levels = 21;
         private int _points;
-
-        public int Count => _count;
 
         private void Awake()
         {
             _playerData = GetComponent<PlayerData>();
             _jsonSaver = GetComponent<JsonSaver>();
             Calculate();
-        }
-
-        private void ClearState()
-        {
-            for (int i = 0; i < _levels; i++)
-            {
-                PlayerPrefs.SetInt("PointsLevel" + i, 0);
-            }
         }
 
         public int Calculate()

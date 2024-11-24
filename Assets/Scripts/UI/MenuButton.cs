@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuButton : MonoBehaviour
+namespace UI
 {
-    public void LoadMenu()
+    public class MenuButton : MonoBehaviour
     {
-        SceneManager.LoadScene(1);
+        public void LoadMenu()
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 }
